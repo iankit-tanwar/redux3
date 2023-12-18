@@ -1,9 +1,16 @@
 import logo from './logo.svg';
 import './App.css';
+import { connect } from 'react-redux';
 
-function App() {
+function App(props) {
+
+let handlechange=(e)=>{
+ props.a()
+}
+
   return (
     <div className="App">
+     {props.myStore}
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
@@ -17,9 +24,21 @@ function App() {
         >
           Learn React
         </a>
+       
+        <button onClick={(e)=>{handlechange(e)}}>Change My Name</button>
       </header>
     </div>
   );
 }
+let mapStateToProps = (state) => {  // storeObject === state
+  return {
+    myStore: state
+  }
+}
+let mapDispatchToProps = (dispatch) => {
 
-export default App;
+  return {
+    a: () => { dispatch({ type: 'abc', payload:'HELLOFUNCTION' }) }
+  }
+}
+export default connect(mapStateToProps, mapDispatchToProps)(App);
